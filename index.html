@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡易星座分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 使用 Inter 字體 */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* 下拉選單樣式 */
+        select {
+            @apply block w-full px-4 py-3 text-base text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500;
+        }
+        /* 分析結果卡片樣式 */
+        .analysis-card {
+            @apply bg-white p-6 rounded-xl shadow-md mt-6 min-h-[100px]; /* 確保有最小高度 */
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-yellow-100 to-orange-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">簡易星座分析</h1>
+
+        <div class="mb-4">
+            <label for="zodiac-select" class="block text-lg font-medium text-gray-700 mb-2">請選擇你的星座：</label>
+            <select id="zodiac-select">
+                <option value="">-- 請選擇 --</option>
+                <option value="aries">♈ 白羊座 (Aries)</option>
+                <option value="taurus">♉ 金牛座 (Taurus)</option>
+                <option value="gemini">♊ 雙子座 (Gemini)</option>
+                <option value="cancer">♋ 巨蟹座 (Cancer)</option>
+                <option value="leo">♌ 獅子座 (Leo)</option>
+                <option value="virgo">♍ 處女座 (Virgo)</option>
+                <option value="libra">♎ 天秤座 (Libra)</option>
+                <option value="scorpio">♏ 天蠍座 (Scorpio)</option>
+                <option value="sagittarius">♐ 射手座 (Sagittarius)</option>
+                <option value="capricorn">♑ 摩羯座 (Capricorn)</option>
+                <option value="aquarius">♒ 水瓶座 (Aquarius)</option>
+                <option value="pisces">♓ 雙魚座 (Pisces)</option>
+            </select>
+        </div>
+
+        <div id="analysis-result" class="analysis-card">
+            <p id="analysis-text" class="text-gray-600 text-center">請先選擇一個星座。</p>
+        </div>
+    </div>
+
+    <script>
+        // 星座分析資料
+        const zodiacAnalyses = {
+            aries: "充滿活力、熱情、勇敢，有時比較衝動。",
+            taurus: "可靠、有耐心、務實，但可能有點固執。",
+            gemini: "反應快、好奇心強、善於溝通，但可能善變。",
+            cancer: "情感豐富、有同情心、重視家庭，但比較敏感。",
+            leo: "自信、有領導力、慷慨大方，但可能有點自我中心。",
+            virgo: "注重細節、謙虛、分析力強，但可能過於挑剔。",
+            libra: "追求公平、有魅力、愛好和平，但可能猶豫不決。",
+            scorpio: "熱情、有決心、洞察力強，但可能佔有慾強。",
+            sagittarius: "樂觀、愛好自由、有哲學思考，但可能不夠圓滑。",
+            capricorn: "有責任感、有紀律、務實，但可能比較嚴肅。",
+            aquarius: "獨立、有創意、人道主義，但可能比較疏離。",
+            pisces: "有同情心、有直覺、藝術氣息濃厚，但可能容易逃避現實。"
+        };
+
+        // 獲取 DOM 元素
+        const zodiacSelect = document.getElementById('zodiac-select');
+        const analysisResultDiv = document.getElementById('analysis-result');
+        const analysisText = document.getElementById('analysis-text');
+
+        // 事件監聽器：當選擇改變時觸發
+        zodiacSelect.addEventListener('change', function() {
+            const selectedSign = this.value; // 獲取選中的星座值 (例如 "aries")
+
+            if (selectedSign && zodiacAnalyses[selectedSign]) {
+                // 如果選擇有效且有對應分析
+                analysisText.textContent = zodiacAnalyses[selectedSign];
+                analysisText.classList.remove('text-center'); // 移除置中，讓文字靠左
+                analysisText.classList.add('text-lg'); // 稍微放大文字
+            } else {
+                // 如果選擇的是預設選項或無效選項
+                analysisText.textContent = "請先選擇一個星座。";
+                analysisText.classList.add('text-center'); // 恢復置中
+                analysisText.classList.remove('text-lg'); // 恢復預設大小
+            }
+        });
+    </script>
+
+</body>
+</html>
